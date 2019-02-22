@@ -14,13 +14,13 @@ You will need to copy the 'clientId' from your OAuth credentials and enter it in
 * Sign into Google Developer console: https://console.developers.google.com
 * Create a project.
 * Go to API library and enable the APIs you want: https://console.developers.google.com/apis/library
-  Eg (for Google Photos API): https://console.developers.google.com/apis/library/photoslibrary.googleapis.com
+	- Eg (for Google Photos API): https://console.developers.google.com/apis/library/photoslibrary.googleapis.com
 * Setup consent screen: https://console.developers.google.com/apis/credentials/consent
 	- Add authorised domains, eg: "jonagh.github.io"
 * Create credentials (choose OAuth client id): https://console.developers.google.com/apis/credentials/oauthclient
 	- For "Web Application"
 	- Add Authorised JavaScript origins, eg: "https://jonagh.github.io"
-* Copy the client ID (from the credentials you just created)
+* Copy the client ID (from the credentials you just created) and paste it into the gray box at the top of the tool's UI.
 
 You can host it on your own computer (or wherever you want).. or you can use it here: https://jonagh.github.io/gapi-querier
 * I don't output very good errors (sorry), so make sure to check your credentials are correct.

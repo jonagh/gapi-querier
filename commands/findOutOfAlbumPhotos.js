@@ -60,8 +60,6 @@ async function runAsync() {
 			const url = _mediaItems[id],
 				  tr = document.createElement('tr');
 
-			tr.style = 'border:1px solid gray';
-
 			/*
 			// Id
 			const tdId = document.createElement('td');

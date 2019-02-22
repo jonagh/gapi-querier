@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <title>GAPI Querier</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- mdc-web requirements -->
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  </head>
+  <body>
+    <div class="goog">
+      <input type="text" id="inputGapiClientId" placeholder="CLIENT_ID.apps.googleusercontent.com" />
+
+      <div id="cardSignin" class="card" hidden>
+        <span id="containerSigninButton">Loading...</span>
+        <span id="outputSigninIdentity" class="signin-identity" hidden></span>
+      </div>
+    </div>
+
+    <hr />
+
+    <div id="cardCommands" class="commands card" hidden>
+      <span class="flex">
+        <select id="selectCommands">
+          <option disabled selected>Choose a command to run</option>
+        </select>
+        <button id="buttonRunCommand" hidden>Run</button>
+      </span>
+      <div id="progressRunCommand" role="progressbar" class="commands-progress mdc-linear-progress mdc-linear-progress--indeterminate" hidden>
+          <div class="mdc-linear-progress__buffering-dots"></div>
+          <div class="mdc-linear-progress__buffer"></div>
+          <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+          </div>
+          <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+          </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div id="cardResults" class="card" hidden>
+    </div>
+
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

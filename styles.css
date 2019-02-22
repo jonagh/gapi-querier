@@ -1,0 +1,99 @@
+html, body {
+	margin: 0;
+	padding: 0;
+
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+}
+body {
+	padding: 3em;
+	background-color: #eee;
+	color: #333;
+
+	--color-googleBlue: #4285f4;
+	--color-disabled: #999;
+}
+
+[hidden] {
+	display: none !important;
+}
+hr {
+	display: block;
+	height: 1px;
+	margin: 0.25em 0;
+	border: none;
+	background: transparent;
+}
+select {
+	padding: 0.2em;
+	border-color: var(--color-googleBlue);
+	border-radius: 0.2em;
+	font-size: 1.25em;
+}
+select[disabled] {
+	border-color: var(--color-disabled);
+	color: var(--color-disabled);
+}
+
+.card {
+	display: inline-block;
+
+	margin-bottom: 1em;
+	padding: 1em;
+
+	border: 1px solid #ddd;
+	border-radius: 0.3em;
+	background-color: #fff;
+	box-shadow: 0 0 0.5em 0 #ddd;
+}
+.flex {
+	display: flex;
+}
+
+.goog {
+	display: inline-block;
+}
+
+#inputGapiClientId {
+	display: block;
+	width: 100%;
+	margin-bottom: 0.1em;
+	padding: 0.2em 0.5em;
+	border: 1px solid #ddd;
+	background-color: transparent;
+	color: var(--color-disabled);
+}
+.signin-identity {
+	display: block;
+	margin: 0.5em 0;
+
+	color: var(--color-googleBlue);
+	text-align: center;
+	font-weight: bold;
+}
+
+.commands * {
+	outline: none;
+}
+.commands button {
+	cursor: pointer;
+
+	margin-left: 0.25em;
+
+    border: 1px solid var(--color-googleBlue);
+    border-radius: 0.2em;
+    background-color: var(--color-googleBlue);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+
+    color: #fff;
+    font-size: 1.25em;
+}
+.commands button[disabled] {
+	border-color: var(--color-disabled);
+	background-color: var(--color-disabled);
+	box-shadow: none
+}
+.commands-progress {
+	display: block;
+	margin-top: 0.25em;
+	--mdc-theme-primary: var(--color-googleBlue);
+}

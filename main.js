@@ -1,0 +1,55 @@
+import auth from './auth.js';
+import ui from './ui.js';
+import commandsLoader from './commands.js';
+
+commandsLoader.then(commands => {
+  // Commands should be an array of 'command' objects,
+  // which should have the properties: { name, desc, scopes, run }.
+
+  // Set command options into UI.
+  ui.state.commands = commands.map((c, i) => { return { value: i, text: c.name }; });
+
+  // On button click run the selected command, the <select>.value is the index into the commands array.
+  ui.elements.buttonRunCommand.addEventListener('click', () => runCommand(commands[ui.elements.selectCommands.value]));
+
+  return distillCommandScopes(commands);
+})
+.then(gapiScopes => {
+  ui.init((gapiClientId) => {
+    if (gapiClientId) {
+      auth.init(gapiClientId, gapiScopes, (userDisplayIdentity) => { ui.state.identity = userDisplayIdentity; });
+      auth.renderButton(ui.elements.containerSigninButton.id, gapiScopes);
+    }
+  });
+});
+
+async function runCommand(selectedCommand) {
+  if (!selectedCommand.run || typeof selectedCommand.run !== 'function') {
+    console.error(`run command failed: no run function for '${selectedCommand.name}'`);
+    return;
+  }
+
+  ui.state.results = null;
+  ui.state.running = true;
+
+  try {
+    ui.state.results = await selectedCommand.run(gapi); // gapi should already be loaded globally
+  }
+  catch (err) {
+    throw err;
+  }
+  finally {
+    ui.state.running = false;
+  }
+}
+
+function distillCommandScopes(commands) {
+  let scopes = commands
+    .map(cmd => cmd.scopes.split(' ')) // Get all the scopes split up into their own arrays.
+    .reduce((result, scopes) => result.concat(scopes), []); // Concat (flatten) into single array.
+
+  scopes = new Set(scopes); // The Set type will eliminate duplicates (kinda hacky).
+  scopes = [...scopes].join(' '); // Turn into array using spread operator (...) and join into space separated string.
+
+  return scopes;
+}

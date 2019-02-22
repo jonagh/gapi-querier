@@ -58,14 +58,20 @@ async function runAsync() {
 
 		for (const id in _mediaItems) {
 			const url = _mediaItems[id],
-				  tr = document.createElement('tr'),
-				  tdId = document.createElement('td'),
-				  tdUrl = document.createElement('td');
+				  tr = document.createElement('tr');
 
+			tr.style = 'border:1px solid gray';
+
+			/*
+			// Id
+			const tdId = document.createElement('td');
 			tdId.innerText = id;
-			tdUrl.innerText = url;
-
 			tr.appendChild(tdId);
+			*/
+
+			// Url
+			const tdUrl = document.createElement('td');
+			tdUrl.innerText = url;
 			tr.appendChild(tdUrl);
 
 			table.appendChild(tr);

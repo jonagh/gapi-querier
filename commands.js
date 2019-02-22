@@ -1,5 +1,5 @@
 const commandModules = [
-	import('./commands/example.js'),
+	//import('./commands/example.js'),
 	import('./commands/findOutOfAlbumPhotos.js')
 ];
 

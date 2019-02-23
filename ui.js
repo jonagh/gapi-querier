@@ -57,6 +57,7 @@ function toggleUI(hasGapiClientId, isSignedIn) {
 	elements.containerSigninButton.toggleAttribute('hidden', isSignedIn);
 	elements.outputSigninIdentity.toggleAttribute('hidden', !isSignedIn);
 	elements.cardCommands.toggleAttribute('hidden', !isSignedIn);
+	elements.selectCommands.value = '-';
 }
 
 function initGeneral() {

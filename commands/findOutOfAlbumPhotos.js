@@ -60,17 +60,9 @@ async function runAsync() {
 			const url = _mediaItems[id],
 				  tr = document.createElement('tr');
 
-			/*
-			// Id
-			const tdId = document.createElement('td');
-			tdId.innerText = id;
-			tr.appendChild(tdId);
-			*/
-
-			// Url
-			const tdUrl = document.createElement('td');
-			tdUrl.innerText = url;
-			tr.appendChild(tdUrl);
+			tr.innerHTML =
+				//`<td>${id}<td>` +
+				`<td><a href='${url}' target='_blank'>${url}</a><td>`;
 
 			table.appendChild(tr);
 		}

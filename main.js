@@ -1,26 +1,22 @@
 import auth from './auth.js';
 import ui from './ui.js';
-import commandsLoader from './commands.js';
 
-commandsLoader.then(commands => {
-  // Commands should be an array of 'command' objects,
-  // which should have the properties: { name, desc, scopes, run }.
+// Commands should be an array of 'command' objects,
+// which should have the properties: { name, desc, scopes, run }.
+import commands from './commands.js';
 
-  // Set command options into UI.
-  ui.state.commands = commands.map((c, i) => { return { value: i, text: c.name }; });
+// Set command options into UI.
+ui.state.commands = commands.map((c, i) => { return { value: i, text: c.name }; });
+// On button click run the selected command, the <select>.value is the index into the commands array.
+ui.elements.buttonRunCommand.addEventListener('click', () => runCommand(commands[ui.elements.selectCommands.value]));
 
-  // On button click run the selected command, the <select>.value is the index into the commands array.
-  ui.elements.buttonRunCommand.addEventListener('click', () => runCommand(commands[ui.elements.selectCommands.value]));
-
-  return distillCommandScopes(commands);
-})
-.then(gapiScopes => {
-  ui.init((gapiClientId) => {
-    if (gapiClientId) {
-      auth.init(gapiClientId, gapiScopes, (userDisplayIdentity) => { ui.state.identity = userDisplayIdentity; });
-      auth.renderButton(ui.elements.containerSigninButton.id, gapiScopes);
-    }
-  });
+const gapiScopes = distillCommandScopes(commands);
+// Initialize the UI and then initialize Auth (with gapi & scopes).
+ui.init((gapiClientId) => {
+  if (gapiClientId) {
+    auth.init(gapiClientId, gapiScopes, (userDisplayIdentity) => { ui.state.identity = userDisplayIdentity; });
+    auth.renderButton(ui.elements.containerSigninButton.id, gapiScopes);
+  }
 });
 
 async function runCommand(selectedCommand) {

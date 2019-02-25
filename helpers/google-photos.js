@@ -12,9 +12,8 @@ function doRequest(method, path, body, accessToken) {
 	return fetch(ENDPOINT + path, {
 		method: method || 'GET',
 		mode: 'cors',
-		cache: 'no-store',
 		headers: {
-			'Content-Type': 'application/json',
+			'content-type': 'application/json',
 			'authorization': `Bearer ${accessToken}`
 		},
 		body: body ? JSON.stringify(body) : undefined

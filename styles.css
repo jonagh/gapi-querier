@@ -71,13 +71,8 @@ select[disabled] {
 	font-weight: bold;
 }
 
-.commands * {
-	outline: none;
-}
-.commands button {
+button {
 	cursor: pointer;
-
-	margin-left: 0.25em;
 
     border: 1px solid var(--color-googleBlue);
     border-radius: 0.2em;
@@ -87,10 +82,17 @@ select[disabled] {
     color: #fff;
     font-size: 1.25em;
 }
-.commands button[disabled] {
+button[disabled] {
 	border-color: var(--color-disabled);
 	background-color: var(--color-disabled);
 	box-shadow: none
+}
+
+.commands * {
+	outline: none;
+}
+.commands button {
+	margin-left: 0.25em;
 }
 .commands-progress {
 	display: block;

@@ -72,7 +72,8 @@ async function runAsync(checkSharedAlbums) {
 
 	if (Object.keys(_mediaItems).length) {
 		const frag = document.createDocumentFragment(),
-			  table = document.createElement('table');
+			  table = document.createElement('table'),
+			  tableId = 'tableFindOutOfAlbumPhotos';
 
 		for (const id in _mediaItems) {
 			const url = _mediaItems[id],
@@ -85,10 +86,43 @@ async function runAsync(checkSharedAlbums) {
 			table.appendChild(tr);
 		}
 
+		frag.appendChild(createSaveLink(tableId));
+
+		table.id = tableId;
 		frag.appendChild(table);
+
 		return frag;
 	}
 	else return 'No out-of-album photos found';
+}
+function createSaveLink(tableId) {
+	const divContainer = document.createElement('div'),
+		  btnSave = document.createElement('button');
+
+	divContainer.style = 'margin-bottom:1em;';
+	btnSave.innerText = 'Save';
+	
+	btnSave.addEventListener('click', ev => {
+		const eleTable = document.getElementById(tableId);
+		if (!eleTable) {
+			console.error('findOutOfAlbumPhotos:createSaveLink:click{table does not exist}', tableId);
+			return;
+		}
+
+		const outputData = `<html><body>${eleTable.outerHTML}</body></html>`;
+
+		const aDownload = document.createElement('a');
+		aDownload.setAttribute('download', 'output.html');
+		aDownload.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(outputData));
+		aDownload.style = 'display:none';
+
+		document.body.appendChild(aDownload);
+		aDownload.click();
+		document.body.removeChild(aDownload);
+	});
+
+	divContainer.appendChild(btnSave);
+	return divContainer;
 }
 
 export default [

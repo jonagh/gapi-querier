@@ -26,7 +26,7 @@ function signInSuccess(googleUser) {
 }
 function signInFailure(err) {
   console.error('gapi.signInFailure', err);
-  _signinCallback(`error:${err}`);
+  _signinCallback(`error:${JSON.stringify(err)}`);
 }
 
 export default {

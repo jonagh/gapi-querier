@@ -1,15 +1,14 @@
 GAPI-Querier (aka find out-of-album photos)
 ==
 I needed to get a list of all my photos (in Google Photos) that were NOT in an album,
-unfortunatley Google didn't provide that feature. So I created this tool to get that listing via their API.
-I probably could have just used their Google API playground (maybe?) but that's not as much fun.
+unfortunately Google didn't provide that feature. So I created this tool to get that listing via their API.
 
-This tool provides an interface to get Google authentication and then run a script.
-The only existing script is the one I wrote to find photos (in Google Photos) that are NOT in an album.
+The gapi-querier tool itself is a shell that gets the Google user's auth and then runs the chosen script.
+The only existing scripts are those I wrote to find photos (in Google Photos) that are NOT in an album.
 
-You will need to specify a Google API credential's client ID so that the tool can access Google APIs.
-Specifically you will need to enable the appropriate API and create OAuth credentials for JS.
-You will need to copy the 'clientId' from your OAuth credentials and enter it into the gray box at the top of the UI.
+In order for the tool to access Google's APIs you will need to provide it with your (Google API credential's) "clientId".
+To get a "clientId" you will need to enable the appropriate API and create OAuth credentials (for JS) in Google Developer console.
+You will need to copy the "clientId" from your OAuth credentials and enter it into the gray box at the top of the tool's UI.
 
 * Sign into Google Developer console: https://console.developers.google.com
 * Create a project.
@@ -25,16 +24,16 @@ You will need to copy the 'clientId' from your OAuth credentials and enter it in
 You can host it on your own computer (or wherever you want).. or you can use it here: https://jonagh.github.io/gapi-querier
 * I don't output very good errors (sorry), so make sure to check your credentials are correct.
 * Some errors can be viewed in the browser's dev-tools/console.
-* Note that, unless you 'verify' your API project & domain, the Google signin popup will show a warning about the app not being verified, you'll need click 'Advanced' and 'Go to ... (unsafe)' to continue.
+* Note, unless you 'verify' your API project & domain, the Google signin popup will show a warning about the app not being verified, you'll need click 'Advanced' and 'Go to ... (unsafe)' to continue.
 
-**WARNING:** This tool (as is) should be benign, it only reads your Google Photo index (id/url), it doesn't look at the images themselves, it doesn't send or save any data to any server. There are no ads or tracking or anything (maybe github or google track hits on their servers? but that is out of my control/access). However I provide no guarantee or warranties or anything of the sort. You should use it at your own risk. You can view the source code and audit it or change it as you wish. The tool (as is) only requests permission for basic-profile data and read-only access to Google Photos, as already mentioned it does nothing with this data apart from outputing the desired results into the browser. Your Google API clientId, once entered, is stored in localStorage (in browser) for your convenience but can be cleared by you at any time.
+**DISCLAIMER:** This tool (as is) should be benign, it only reads your Google Photo index (id/url), it doesn't look at the images themselves, it doesn't send any data to any server (apart from the Google API requests themselves). There are no ads or tracking or anything (maybe Github or Google track hits/etc but that is out of my control). However I provide no guarantee or warranties or anything of the sort. You should use it at your own risk. You can view the source code and audit it or change it as you wish. The tool (as is) only requests permission for basic-profile data and read-only access to Google Photos, as already mentioned it does nothing with this data apart from outputing the desired results into the browser. Your Google API clientId, once entered, is stored in localStorage (in browser) for your convenience but can be cleared by you at any time.
 
 
 
 Customizing
 --
 
-In theory other scripts could be written and plugged into the tool.
+In theory other scripts can be written and plugged into the tool.
 See commands sub dir for examples, and commands.js is where they are imported into the tool/UI.
 If you create your own 'command' then I am expecting something like the following:
 ```

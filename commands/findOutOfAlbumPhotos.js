@@ -1,6 +1,7 @@
 import apiGooglePhotos from '../helpers/google-photos.js';
 
 const _mediaItems = {};
+const _mediaItemsInAlbums = new Set();
 
 function storeMediaItems(mediaItems) {
 	if (!mediaItems) return;
@@ -9,11 +10,12 @@ function storeMediaItems(mediaItems) {
 		_mediaItems[mi.id] = mi.productUrl;
 	}
 }
-function forgetMediaItems(mediaItems) {
+
+function rememberMediaItemsInAlbums(mediaItems) {
 	if (!mediaItems) return;
 
 	for (const mi of mediaItems) {
-		delete _mediaItems[mi.id];
+		_mediaItemsInAlbums.add(mi.id);
 	}
 }
 
@@ -44,30 +46,32 @@ async function requestPagedRecursively(method, path, body, processResults, pageT
 		});
 }
 
-async function runAsync(checkSharedAlbums) {
-	await requestPagedRecursively('GET', '/mediaItems?pageSize=100', null, async (results) =>
-		storeMediaItems(results.mediaItems));
-
-	await requestPagedRecursively('GET', '/albums?pageSize=50', null, async (results) => {
+async function findInAlbums(type) {
+	await requestPagedRecursively('GET', `/${type}?pageSize=50`, null, async (results) => {
 		if (!results.albums) return;
 
-		for (const a of results.albums) {
-			await requestPagedRecursively(
+		const albumPromises = results.albums.map((a) => {
+			return requestPagedRecursively(
 				'POST', '/mediaItems:search', { albumId: a.id, pageSize: 100 },
-				async (results) => forgetMediaItems(results.mediaItems));
-		}
+				async (results) => rememberMediaItemsInAlbums(results.mediaItems));
+		})
+		await Promise.all(albumPromises);
 	});
+}
 
-	if (checkSharedAlbums) {
-		await requestPagedRecursively('GET', '/sharedAlbums?pageSize=50', null, async (results) => {
-			if (!results.sharedAlbums) return;
+async function runAsync(checkSharedAlbums) {
+	const allPhotosPromise = requestPagedRecursively('GET', '/mediaItems?pageSize=100', null, async (results) =>
+		storeMediaItems(results.mediaItems));
+	
+	const albumPhotosPromise = findInAlbums('albums');
+	const sharedAlbumsPhotosPromise = checkSharedAlbums ? findInAlbums('sharedAlbums') : Promise.resolve();
+	
+	await Promise.all([allPhotosPromise, albumPhotosPromise, sharedAlbumsPhotosPromise]);
 
-			for (const a of results.sharedAlbums) {
-				await requestPagedRecursively(
-					'POST', '/mediaItems:search', { albumId: a.id, pageSize: 100 },
-					async (results) => forgetMediaItems(results.mediaItems));
-			}
-		});
+	for (const mediaId of Object.keys(_mediaItems)) {
+		if (_mediaItemsInAlbums.has(mediaId)) {
+			delete _mediaItems[mediaId];
+		}
 	}
 
 	if (Object.keys(_mediaItems).length) {
@@ -79,9 +83,7 @@ async function runAsync(checkSharedAlbums) {
 			const url = _mediaItems[id],
 				  tr = document.createElement('tr');
 
-			tr.innerHTML =
-				//`<td>${id}<td>` +
-				`<td><a href='${url}' target='_blank'>${url}</a><td>`;
+			tr.innerHTML = `<td><a href='${url}' target='_blank'>${url}</a><td>`;
 
 			table.appendChild(tr);
 		}

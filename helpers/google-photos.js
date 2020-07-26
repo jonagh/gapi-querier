@@ -1,4 +1,5 @@
 const ENDPOINT = 'https://photoslibrary.googleapis.com/v1';
+const requestsSemaphore = new semaphore(3);
 
 function getAccessToken(gapi) {
 	return window.gapi
@@ -9,16 +10,27 @@ function getAccessToken(gapi) {
 }
 
 function doRequest(method, path, body, accessToken) {
-	return fetch(ENDPOINT + path, {
-		method: method || 'GET',
-		mode: 'cors',
-		headers: {
-			'content-type': 'application/json',
-			'authorization': `Bearer ${accessToken}`
-		},
-		body: body ? JSON.stringify(body) : undefined
+	return new Promise((resolve, reject) => {
+		requestsSemaphore.take(async () => {
+			try {
+				const response = await fetch(ENDPOINT + path, {
+					method: method || 'GET',
+					mode: 'cors',
+					headers: {
+						'content-type': 'application/json',
+						'authorization': `Bearer ${accessToken}`
+					},
+					body: body ? JSON.stringify(body) : undefined
+				});
+				resolve(response.json())
+			} catch (err) {
+				reject(err);
+			}
+			finally {
+				requestsSemaphore.leave();
+			}
+		});
 	})
-	.then(response => response.json());
 }
 
 export default {

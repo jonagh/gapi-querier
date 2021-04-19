@@ -14,15 +14,17 @@ You will need to copy the "clientId" from your OAuth credentials and enter it in
 * Create a project.
 * Go to API library and enable the APIs you want: https://console.developers.google.com/apis/library
 	- Eg (for Google Photos API): https://console.developers.google.com/apis/library/photoslibrary.googleapis.com
+	- Click enable.
 * Setup consent screen: https://console.developers.google.com/apis/credentials/consent
-	- Add authorised domains, eg: "jonagh.github.io"
-* Create credentials (choose OAuth client id): https://console.developers.google.com/apis/credentials/oauthclient
-	- For "Web Application"
-	- Add Authorised JavaScript origins, eg: "https://jonagh.github.io"
-* Copy the client ID (from the credentials you just created) and paste it into the gray box at the top of the tool's UI.
+	- Click edit app (in OAuth consent screen) and add authorised domains...
+	- If you're running the app from jonagh.github.io/gapi-querier then enter "jonagh.github.io", if you're using your own domain then enter that.
+* Create credentials (OAuth client ID): https://console.developers.google.com/apis/credentials/oauthclient
+	- Application Type: "Web Application"
+	- Add Authorised JavaScript origins, eg: "https://jonagh.github.io" or your own domain.
+* Copy the client ID (from the credentials you just created) and paste it into the gray box at the top of the gapi-querier's UI.
 
 You can host it on your own computer (or wherever you want).. or you can use it here: https://jonagh.github.io/gapi-querier
-* I don't output very good errors (sorry), so make sure to check your credentials are correct.
+* I don't output the best errors (sorry), so make sure to check your credentials are correct.
 * Some errors can be viewed in the browser's dev-tools/console.
 * Note, unless you 'verify' your API project & domain, the Google signin popup will show a warning about the app not being verified, you'll need click 'Advanced' and 'Go to ... (unsafe)' to continue.
 

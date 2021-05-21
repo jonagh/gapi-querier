@@ -22,7 +22,8 @@ function signInSuccess(googleUser) {
     return signInFailure('gapi.signInSuccess:no-user');
   
   let userEmail = googleUser.getBasicProfile().getEmail();
-  _signinCallback(userEmail || 'no-email');
+  if (userEmail) { _signinCallback(userEmail); }
+  else { console.error('gapi.signInSuccess', 'no-email'); } // Can occur if user did not provide appropriate scopes.
 }
 function signInFailure(err) {
   console.error('gapi.signInFailure', err);

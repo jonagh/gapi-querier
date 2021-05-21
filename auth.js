@@ -22,7 +22,7 @@ function signInSuccess(googleUser) {
     return signInFailure('gapi.signInSuccess:no-user');
   
   let userEmail = googleUser.getBasicProfile().getEmail();
-  if (userEmail) { _signinCallback(userEmail || 'Signed In'); } // If no 'email' scope was requested then no email will be available.
+  _signinCallback(userEmail || 'Signed In'); // If no 'email' scope was requested then no email will be available.
 }
 function signInFailure(err) {
   console.error('gapi.signInFailure', err);

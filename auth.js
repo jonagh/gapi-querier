@@ -37,7 +37,7 @@ export default {
     gapi.load('auth2', function() { // on auth2 lib ready
       gapi.auth2.init({
         client_id: gapi_client_id,
-        fetch_basic_profile: true,
+        fetch_basic_profile: false,
         // https://developers.google.com/photos/library/guides/authentication-authorization
         scope: gapi_scopes,
         ux_mode: 'popup',

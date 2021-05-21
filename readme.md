@@ -16,11 +16,18 @@ You will need to copy the "clientId" from your OAuth credentials and enter it in
 	- Eg (for Google Photos API): https://console.developers.google.com/apis/library/photoslibrary.googleapis.com
 	- Click enable.
 * Setup consent screen: https://console.developers.google.com/apis/credentials/consent
-	- Click edit app (in OAuth consent screen) and add authorised domains...
-	- If you're running the app from jonagh.github.io/gapi-querier then enter "jonagh.github.io", if you're using your own domain then enter that.
+	- If you're using a Google Workspaces account then choose either Internal or External as your desire (I chose External so it could be used by non-workspace users). I assume if you're using a normal Google account this option will not be shown.
+	- Click Create.
+	- Give your 'app' a name/email/etc.
+	- Add an authorised domain. If you are going to run the app from jonagh.github.io/gapi-querier then enter "jonagh.github.io", if you're using your own domain then enter that.
+	- You can skip the "Scopes" screen as any scopes that are needed (eg photoslibrary.readonly) will be requested explicitly by the app code on Google authentication/signin. You could add the scopes to the app settings so that they are implictly included in the auth request, however this would require you to have your app verified by Google.
+	- If you leave your app in "Testing" mode then you will also need to manually specify the users that are allowed access. Alternatively you can edit the app (after finishing the creation process) and change it to "Published" mode, this will allow any user access (though some limits apply to non-verified apps).
+	- Finish the Consent Screen creation process. If you want any user to access the app (ie you didn't add test users) then you can "Publish" your app so it is not in "Testing" mode and it allows any user to use it. If you just want to specify certain test users then you can leave it in "Testing" mode, but make sure that the appropriate users have been added as "Test users".
 * Create credentials (OAuth client ID): https://console.developers.google.com/apis/credentials/oauthclient
 	- Application Type: "Web Application"
-	- Add Authorised JavaScript origins, eg: "https://jonagh.github.io" or your own domain.
+	- Add Authorised JavaScript origins, eg: "https://jonagh.github.io" or your own domain if you're using that instead.
+	- An authorised redirect URI is not needed.
+	- Click Create.
 * Copy the client ID (from the credentials you just created) and paste it into the gray box at the top of the gapi-querier's UI.
 
 You can host it on your own computer (or wherever you want).. or you can use it here: https://jonagh.github.io/gapi-querier

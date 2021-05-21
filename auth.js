@@ -22,8 +22,7 @@ function signInSuccess(googleUser) {
     return signInFailure('gapi.signInSuccess:no-user');
   
   let userEmail = googleUser.getBasicProfile().getEmail();
-  if (userEmail) { _signinCallback(userEmail); }
-  else { console.error('gapi.signInSuccess', 'no-email'); } // Can occur if user did not provide appropriate scopes.
+  if (userEmail) { _signinCallback(userEmail || 'Signed In'); } // If no 'email' scope was requested then no email will be available.
 }
 function signInFailure(err) {
   console.error('gapi.signInFailure', err);
@@ -40,7 +39,7 @@ export default {
         client_id: gapi_client_id,
         fetch_basic_profile: false,
         // https://developers.google.com/photos/library/guides/authentication-authorization
-        scope: gapi_scopes,
+        scope: 'email ' + gapi_scopes,
         ux_mode: 'popup',
       })
       //.signIn()

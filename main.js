@@ -12,9 +12,9 @@ ui.elements.buttonRunCommand.addEventListener('click', () => runCommand(commands
 
 const gapiScopes = distillCommandScopes(commands);
 // Initialize the UI and then initialize Auth (with gapi & scopes).
-ui.init((gapiClientId) => {
+ui.init(async (gapiClientId) => {
   if (gapiClientId) {
-    auth.init(gapiClientId, gapiScopes, (userDisplayIdentity) => { ui.state.identity = userDisplayIdentity; });
+    await auth.init(gapiClientId, gapiScopes, (userDisplayIdentity) => { ui.state.identity = userDisplayIdentity; });    
     auth.renderButton(ui.elements.containerSigninButton.id, gapiScopes);
   }
 });
@@ -29,7 +29,7 @@ async function runCommand(selectedCommand) {
   ui.state.running = true;
 
   try {
-    ui.state.results = await selectedCommand.run(gapi); // gapi should already be loaded globally
+    ui.state.results = await selectedCommand.run();
   }
   catch (err) {
     throw err;

@@ -1,4 +1,4 @@
-GAPI-Querier (aka find out-of-album photos)
+GAPI-Querier, AKA: Find out-of-album photos
 ==
 I needed to get a list of all my photos (in Google Photos) that were NOT in an album,
 unfortunately Google didn't provide that feature. So I created this tool to get that listing via their API.

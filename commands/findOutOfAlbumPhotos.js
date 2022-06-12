@@ -36,6 +36,8 @@ async function requestPagedRecursively(method, path, body, processResults, pageT
 
 	return apiGooglePhotos.request(method, url, body)
 		.then(async (results) => {
+			throwOnResultsError(results);
+
 			await processResults(results);
 
 			if (results.nextPageToken) {
@@ -44,11 +46,22 @@ async function requestPagedRecursively(method, path, body, processResults, pageT
 		});
 }
 
+function throwOnResultsError(results) {
+	if (results.error) {
+		throw new Error(`${results.error.code} : ${results.error.status} : ${results.error.message}`);
+	}
+}
+
 async function runAsync(checkSharedAlbums) {
-	await requestPagedRecursively('GET', '/mediaItems?pageSize=100', null, async (results) =>
-		storeMediaItems(results.mediaItems));
+	await requestPagedRecursively('GET', '/mediaItems?pageSize=100', null, async (results) => {
+		throwOnResultsError(results);
+
+		storeMediaItems(results.mediaItems);
+	});
 
 	await requestPagedRecursively('GET', '/albums?pageSize=50', null, async (results) => {
+		throwOnResultsError(results);
+
 		if (!results.albums) return;
 
 		for (const a of results.albums) {
@@ -60,6 +73,8 @@ async function runAsync(checkSharedAlbums) {
 
 	if (checkSharedAlbums) {
 		await requestPagedRecursively('GET', '/sharedAlbums?pageSize=50', null, async (results) => {
+			throwOnResultsError(results);
+
 			if (!results.sharedAlbums) return;
 
 			for (const a of results.sharedAlbums) {
@@ -131,10 +146,15 @@ export default [
 		scopes: 'https://www.googleapis.com/auth/photoslibrary.readonly',
 
 		async run() {
-			console.log('findOutOfAlbumPhotos : running');
-			const output = await runAsync();
-			console.log('findOutOfAlbumPhotos : finished');
-			return output;
+			try {
+				console.log('findOutOfAlbumPhotos : running');
+				const output = await runAsync(false);
+				console.log('findOutOfAlbumPhotos : finished');
+				return output;
+			}
+			catch (err) {
+				return err.toString();
+			}
 		}
 	},
 	{
@@ -142,10 +162,15 @@ export default [
 		scopes: 'https://www.googleapis.com/auth/photoslibrary.readonly',
 
 		async run() {
-			console.log('findOutOfAlbumPhotos(w/shared) : running');
-			const output = await runAsync(true);
-			console.log('findOutOfAlbumPhotos(w/shared) : finished');
-			return output;
+			try {
+				console.log('findOutOfAlbumPhotos(w/shared) : running');
+				const output = await runAsync(true);
+				console.log('findOutOfAlbumPhotos(w/shared) : finished');
+				return output;
+			}
+			catch (err) {
+				return err.toString();
+			}
 		}
 	}
 ]

@@ -43,7 +43,17 @@
     <div id="cardResults" class="card" hidden>
     </div>
 
-    <script src="https://apis.google.com/js/platform.js"></script>
+    <!-- https://developers.google.com/identity/oauth2/web/guides/migration-to-gis#gapi-asyncawait -->
+    <script>
+      const gisLoadPromise = new Promise((resolve, reject) => {
+      gisLoadOkay = resolve;
+      gisLoadFail = reject;
+    });
+    </script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
     <script type="module" src="main.js"></script>
+    <script>
+      document.cookie = "G_AUTH2_MIGRATION=informational";
+    </script>
   </body>
 </html>

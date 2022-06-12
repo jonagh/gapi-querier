@@ -45,5 +45,10 @@ export default {
     );
 
     google.accounts.id.prompt();
+  },
+
+  reset() {
+    const authInst = gapi.auth2.getAuthInstance();
+    if (authInst) { authInst.disconnect(); }
   }
 }

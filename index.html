@@ -6,21 +6,24 @@
     <!-- mdc-web requirements -->
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <!-- material-symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   </head>
   <body>
-    <div class="goog">
+    <div class="u-inlineBlock">
       <input type="text" id="inputGapiClientId" placeholder="CLIENT_ID.apps.googleusercontent.com" />
 
-      <div id="cardSignin" class="card" hidden>
+      <div id="cardSignin" class="card u-flex" hidden>
         <span id="containerSigninButton">Loading...</span>
         <span id="outputSigninIdentity" class="signin-identity" hidden></span>
+        <button id="buttonSigninReset" class="u-marginLeft button--subdued u-uppercase material-symbols-outlined" hidden>refresh</button>
       </div>
     </div>
 
     <hr />
 
     <div id="cardCommands" class="commands card" hidden>
-      <span class="flex">
+      <span class="u-flex">
         <select id="selectCommands">
           <option disabled selected value="-">Choose a command to run</option>
         </select>

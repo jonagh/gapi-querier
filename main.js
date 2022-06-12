@@ -7,8 +7,10 @@ import commands from './commands.js';
 
 // Set command options into UI.
 ui.state.commands = commands.map((c, i) => { return { value: i, text: c.name }; });
-// On button click run the selected command, the <select>.value is the index into the commands array.
+// On RUN button click run the selected command, the <select>.value is the index into the commands array.
 ui.elements.buttonRunCommand.addEventListener('click', () => runCommand(commands[ui.elements.selectCommands.value]));
+// On REFRESH button click clear auth and reset UI.
+ui.elements.buttonSigninReset.addEventListener('click', () => resetSignin());
 
 const gapiScopes = distillCommandScopes(commands);
 // Initialize the UI and then initialize Auth (with gapi & scopes).
@@ -37,6 +39,12 @@ async function runCommand(selectedCommand) {
   finally {
     ui.state.running = false;
   }
+}
+
+function resetSignin() {
+  auth.reset();
+  ui.state.identity = null;
+  ui.state.results = null;
 }
 
 function distillCommandScopes(commands) {

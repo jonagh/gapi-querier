@@ -9,8 +9,9 @@ body {
 	background-color: #eee;
 	color: #333;
 
-	--color-googleBlue: #4285f4;
+	--color-action: #4285f4;
 	--color-disabled: #999;
+	--color-subdued: #eee;
 }
 
 [hidden] {
@@ -25,7 +26,7 @@ hr {
 }
 select {
 	padding: 0.2em;
-	border-color: var(--color-googleBlue);
+	border-color: var(--color-action);
 	border-radius: 0.2em;
 	font-size: 1.25em;
 }
@@ -45,12 +46,18 @@ select[disabled] {
 	background-color: #fff;
 	box-shadow: 0 0 0.5em 0 #ddd;
 }
-.flex {
+
+.u-inlineBlock {
+	display: inline-block;
+}
+.u-flex {
 	display: flex;
 }
-
-.goog {
-	display: inline-block;
+.u-marginLeft {
+	margin-left:  0.5em;
+}
+.u--uppercase {
+	text-transform: uppercase;
 }
 
 #inputGapiClientId {
@@ -66,7 +73,7 @@ select[disabled] {
 	display: block;
 	margin: 0.5em 0;
 
-	color: var(--color-googleBlue);
+	color: var(--color-action);
 	text-align: center;
 	font-weight: bold;
 }
@@ -74,9 +81,9 @@ select[disabled] {
 button {
 	cursor: pointer;
 
-    border: 1px solid var(--color-googleBlue);
+    border: 1px solid var(--color-action);
     border-radius: 0.2em;
-    background-color: var(--color-googleBlue);
+    background-color: var(--color-action);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
 
     color: #fff;
@@ -86,6 +93,10 @@ button[disabled] {
 	border-color: var(--color-disabled);
 	background-color: var(--color-disabled);
 	box-shadow: none
+}
+button.button--subdued {
+	background-color: var(--color-subdued);
+	color: var(--color-action);
 }
 
 .commands * {
@@ -97,5 +108,13 @@ button[disabled] {
 .commands-progress {
 	display: block;
 	margin-top: 0.25em;
-	--mdc-theme-primary: var(--color-googleBlue);
+	--mdc-theme-primary: var(--color-action);
+}
+
+.material-symbols-outlined {
+	font-variation-settings:
+	'FILL' 0,
+	'wght' 400,
+	'GRAD' 0,
+	'opsz' 48
 }

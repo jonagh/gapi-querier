@@ -7,10 +7,11 @@ let b64DecodeUnicode = str =>
         ).join(''))
 
 export default {
-    parseJwt: (token) =>
-        JSON.parse(
+    parseJwt: (token) => {
+        return JSON.parse(
             b64DecodeUnicode(
                 token.split('.')[1].replace('-', '+').replace('_', '/')
-            )
-        )
+                )
+            );
+    }
 }

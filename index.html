@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>GAPI Querier</title>
@@ -46,17 +47,16 @@
     <div id="cardResults" class="card" hidden>
     </div>
 
+    <script>document.cookie = "G_AUTH2_MIGRATION=informational";</script>
     <!-- https://developers.google.com/identity/oauth2/web/guides/migration-to-gis#gapi-asyncawait -->
     <script>
-      const gisLoadPromise = new Promise((resolve, reject) => {
-      gisLoadOkay = resolve;
-      gisLoadFail = reject;
-    });
+      const global_gisLoadPromise = new Promise((resolve, reject) => {
+        global_gisLoadOkay = resolve;
+        global_gisLoadFail = reject;
+      });
     </script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="global_gisLoadOkay()" onerror="global_gisLoadFail(event)"></script>
+
     <script type="module" src="main.js"></script>
-    <script>
-      document.cookie = "G_AUTH2_MIGRATION=informational";
-    </script>
   </body>
 </html>

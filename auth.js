@@ -11,7 +11,7 @@ async function loadAccessToken(gapi_client_id, gapi_scopes) {
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: gapi_client_id,
       scope: gapi_scopes,
-      prompt: 'none',
+      prompt: '',
       callback: (resp) => {
         if (resp.error !== undefined) {
           reject(resp);

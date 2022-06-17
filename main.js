@@ -7,16 +7,22 @@ import commands from './commands.js';
 
 // Set command options into UI.
 ui.state.commands = commands.map((c, i) => { return { value: i, text: c.name }; });
-// On button click run the selected command, the <select>.value is the index into the commands array.
+// On RUN button click run the selected command, the <select>.value is the index into the commands array.
 ui.elements.buttonRunCommand.addEventListener('click', () => runCommand(commands[ui.elements.selectCommands.value]));
+// On REFRESH button click clear auth and reset UI.
+ui.elements.buttonSigninReset.addEventListener('click', () => resetSignin());
 
 const gapiScopes = distillCommandScopes(commands);
+
 // Initialize the UI and then initialize Auth (with gapi & scopes).
-ui.init((gapiClientId) => {
-  if (gapiClientId) {
-    auth.init(gapiClientId, gapiScopes, (userDisplayIdentity) => { ui.state.identity = userDisplayIdentity; });
-    auth.renderButton(ui.elements.containerSigninButton.id, gapiScopes);
+ui.init(async (gapiClientId) => {
+  if (!gapiClientId) {
+    console.error('No GAPI ClientID provided');
+    return;
   }
+
+  await auth.init(gapiClientId, gapiScopes, (usernameOrError) => { ui.state.identity = usernameOrError; });
+  auth.renderButton(ui.elements.containerSigninButton.id);
 });
 
 async function runCommand(selectedCommand) {
@@ -29,7 +35,7 @@ async function runCommand(selectedCommand) {
   ui.state.running = true;
 
   try {
-    ui.state.results = await selectedCommand.run(gapi); // gapi should already be loaded globally
+    ui.state.results = await selectedCommand.run();
   }
   catch (err) {
     throw err;
@@ -37,6 +43,12 @@ async function runCommand(selectedCommand) {
   finally {
     ui.state.running = false;
   }
+}
+
+function resetSignin() {
+  auth.reset();
+  ui.state.identity = null;
+  ui.state.results = null;
 }
 
 function distillCommandScopes(commands) {

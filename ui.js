@@ -3,6 +3,7 @@ const elements = {
 	cardSignin: document.getElementById('cardSignin'),
 	containerSigninButton: document.getElementById('containerSigninButton'),
 	outputSigninIdentity: document.getElementById('outputSigninIdentity'),
+	buttonSigninReset: document.getElementById('buttonSigninReset'),
 	cardCommands: document.getElementById('cardCommands'),
 	selectCommands: document.getElementById('selectCommands'),
 	buttonRunCommand: document.getElementById('buttonRunCommand'),
@@ -56,8 +57,10 @@ function toggleUI(hasGapiClientId, isSignedIn) {
 	elements.cardSignin.toggleAttribute('hidden', !hasGapiClientId);
 	elements.containerSigninButton.toggleAttribute('hidden', isSignedIn);
 	elements.outputSigninIdentity.toggleAttribute('hidden', !isSignedIn);
+	elements.buttonSigninReset.toggleAttribute('hidden', !isSignedIn);
 	elements.cardCommands.toggleAttribute('hidden', !isSignedIn);
 	elements.selectCommands.value = '-';
+	state.results(); // clear
 }
 
 function initGeneral() {

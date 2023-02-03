@@ -2,6 +2,8 @@ import apiGooglePhotos from '../helpers/google-photos.js';
 
 const _mediaItems = {};
 
+let i=1
+
 function storeMediaItems(mediaItems) {
     if (!mediaItems) { return; }
 
@@ -96,7 +98,7 @@ async function runAsync(checkSharedAlbums) {
 
             tr.innerHTML =
                 //`<td>${id}<td>` +
-                `<td><a href='${url}' target='_blank'>${url}</a><td>`;
+                `<td>i++ <a href='${url}' target='_blank'>${url}</a><td>`;
 
             table.appendChild(tr);
         }

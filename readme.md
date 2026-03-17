@@ -1,3 +1,14 @@
+# This project no longer works, and is not maintained.
+APIs that this project relies upon are no longer supported by Google.
+
+An alternative recommendation has been made for this project: https://github.com/xob0t/Google-Photos-Toolkit
+
+I have not used that project myself, I make no guarantees, but it looks nice.
+
+<br><br><br><br><br><br><br>
+
+---
+
 GAPI-Querier, AKA: Find out-of-album photos
 ==
 I needed to get a list of all my photos (in Google Photos) that were NOT in an album,
